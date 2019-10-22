@@ -1,0 +1,2 @@
+# lhq
+Localization HQ Editor
