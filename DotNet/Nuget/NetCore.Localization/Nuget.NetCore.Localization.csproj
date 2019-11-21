@@ -27,13 +27,20 @@ First release of LHQ Editor Library.
     <LangVersion>7.3</LangVersion>
     <NuspecFile>$(MSBuildThisFileDirectory)$(MSBuildProjectName).nuspec</NuspecFile>
     <SolutionFolder>$(MSBuildProjectDirectory)\..\</SolutionFolder>
-    <Configurations>Debug;Release;DebugVS2019</Configurations>
+    <Configurations>Debug;Release;DebugVS2019;DebugSNK;ReleaseSNK</Configurations>
     <AssemblyTitle>$(Title)</AssemblyTitle>
     <PreserveCompilationContext>true</PreserveCompilationContext>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Version>1.0.0-rc1</Version>
   </PropertyGroup>
+
+
+  <PropertyGroup Condition="'$(Configuration)' == 'DebugSNK' or '$(Configuration)' == 'ReleaseSNK'">
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\ScaleHQ.LHQ.NugetPackages.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  
 
   <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.6' ">
     <Title>ASP.NET Core 1 LHQ Editor Library - .NET Standard 1.6</Title>
