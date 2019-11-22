@@ -91,6 +91,14 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'DebugSNK' or '$(Configuration)' == 'ReleaseSNK'">
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\ScaleHQ.LHQ.NugetPackages.snk</AssemblyOriginatorKeyFile>
+    <NuspecFile>Nuget.WPF.Localization.StrongName.nuspec</NuspecFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug' or '$(Configuration)' == 'Release'">
+    <NuspecFile>Nuget.WPF.Localization.nuspec</NuspecFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -126,6 +134,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Nuget.WPF.Localization.StrongName.nuspec">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="readme.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -135,6 +146,7 @@
     <PostBuildEvent>rem xcopy $(TargetDir)$(TargetName).dll $(SolutionDir)BuildDrop\WPF.Localization\lib\net46\ /R /F /S /Y
 rem xcopy $(TargetDir)$(TargetName).xml $(SolutionDir)BuildDrop\WPF.Localization\lib\net46\ /R /F /S /Y
 
-$(SolutionDir)Tool\nuget.exe  pack $(TargetDir)$(ProjectName).nuspec -OutputDirectory  $(SolutionDir)BuildDrop</PostBuildEvent>
+$(SolutionDir)Tool\nuget.exe  pack $(TargetDir)$(NuspecFile) -OutputDirectory  $(SolutionDir)BuildDrop
+    </PostBuildEvent>
   </PropertyGroup>
 </Project>

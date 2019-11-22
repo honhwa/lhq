@@ -17,7 +17,6 @@
     <Copyright>Copyright (c) 2017-$(CurrentYear) ScaleHQ Solutions</Copyright>
     <AssemblyName>ScaleHQ.AspNetCore.LHQ</AssemblyName>
     <RootNamespace>ScaleHQ.AspNetCore.LHQ</RootNamespace>
-    <PackageId>ScaleHQ.AspNetCore.LHQ</PackageId>
     <PackageTags>resources,resx,localization,editor</PackageTags>
     <PackageReleaseNotes>
 First release of LHQ Editor Library.
@@ -37,10 +36,14 @@ First release of LHQ Editor Library.
 
 
   <PropertyGroup Condition="'$(Configuration)' == 'DebugSNK' or '$(Configuration)' == 'ReleaseSNK'">
+    <PackageId>ScaleHQ.AspNetCore.LHQ.StrongName</PackageId>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\ScaleHQ.LHQ.NugetPackages.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug' or '$(Configuration)' == 'Release'">
+    <PackageId>ScaleHQ.AspNetCore.LHQ</PackageId>
+  </PropertyGroup>
 
   <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.6' ">
     <Title>ASP.NET Core 1 LHQ Editor Library - .NET Standard 1.6</Title>
@@ -64,7 +67,7 @@ First release of LHQ Editor Library.
 
   <Target Name="SetNuspecProperties" BeforeTargets="GenerateNuspec">
     <PropertyGroup>
-      <NuspecProperties>$(NuspecProperties);id=$(AssemblyName)</NuspecProperties>
+      <NuspecProperties>$(NuspecProperties);id=$(PackageId)</NuspecProperties>
       <NuspecProperties>$(NuspecProperties);config=$(Configuration)</NuspecProperties>
       <NuspecProperties>$(NuspecProperties);version=$(PackageVersion)</NuspecProperties>
       <NuspecProperties>$(NuspecProperties);description=$(Description)</NuspecProperties>
