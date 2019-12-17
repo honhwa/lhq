@@ -1,4 +1,4 @@
-﻿#if NETSTANDARD2_0
+﻿#if !ASP_NET_CORE1
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Metadata;

@@ -26,7 +26,7 @@ namespace ScaleHQ.AspNetCore.LHQ
 
         public static IMvcBuilder AddMvcTypedStringsLocalizer(this IMvcBuilder mvcBuilder)
         {
-#if NETSTANDARD2_0
+#if !ASP_NET_CORE1
             mvcBuilder.Services.Configure<MvcOptions>(options => { options.ModelMetadataDetailsProviders.Add(new DisplayNameDetailsProvider()); });
 
             mvcBuilder.AddDataAnnotationsLocalization(options =>
@@ -57,7 +57,7 @@ namespace ScaleHQ.AspNetCore.LHQ
                     $"Service '{typeof(IStringLocalizerFactory)}' was not registered, call method {methodName} in begin of Startup.ConfigureServices()!");
             }
 
-#if NETSTANDARD2_0
+#if !ASP_NET_CORE1
             DisplayNameDetailsProvider.SetStringLocalizer(stringLocalizer);
 #endif
 
