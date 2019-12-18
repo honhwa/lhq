@@ -1,4 +1,10 @@
-﻿using System;
+﻿// /* Copyright (C) 2020 ScaleHQ Solutions s.r.o. - All Rights Reserved
+//  * Unauthorized copying of this file, via any medium is strictly prohibited
+//  * Proprietary and confidential
+//  * Written by Peter Šulek <peter.sulek@scalehq.sk> / ScaleHQ Solutions company (12/2019)
+//  */
+
+using System;
 using System.Collections;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -10,56 +16,13 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Markup;
 using IFormattable = System.IFormattable;
+// ReSharper disable UnusedMember.Global
 
 namespace ScaleHQ.WPF.LHQ
 {
-    // public class LocalizationKeyAttached: Freezable
-    // {
-    //     public static DependencyProperty ResourceKeyProperty =
-    //         DependencyProperty.Register(
-    //             nameof(ResourceKey),
-    //             typeof(string),
-    //             typeof(LocalizationKeyAttached),
-    //             new UIPropertyMetadata(null));
-    //             /*new FrameworkPropertyMetadata(string.Empty,
-    //                 FrameworkPropertyMetadataOptions.BindsTwoWayByDefault | FrameworkPropertyMetadataOptions.Inherits));*/
-    //
-    //     public string ResourceKey
-    //     {
-    //         get { return GetValue(ResourceKeyProperty) as string; }
-    //         set { SetValue(ResourceKeyProperty, value); }
-    //     }
-    //
-    //     protected override Freezable CreateInstanceCore()
-    //     {
-    //         return new LocalizationKeyAttached();
-    //     }
-    // }
-
-    // public class LocalizationKeyExtension : BindingDecoratorBase
-    // {
-    //     public override object ProvideValue(IServiceProvider provider)
-    //     {
-    //         //delegate binding creation etc. to the base class
-    //         object val = base.ProvideValue(provider);
-    //
-    //         //try to get bound items for our custom work
-    //         DependencyObject targetObject;
-    //         DependencyProperty targetProperty;
-    //         bool status = TryGetTargetItems(provider, out targetObject,
-    //             out targetProperty);
-    //
-    //         if (status)
-    //         {
-    //             string key = LocalizationKeyAttached.GetKey(targetObject);
-    //         }
-    //
-    //         return val;
-    //     }
-    // }
-
     /// <summary>
     /// Localization markup extension for WPF projects.
+    /// Works with LHQ strings context singleton returned by <see cref="LocalizationContextFactoryBase"/> descendants.
     /// </summary>
     [ContentProperty("Bindings")]
     [MarkupExtensionReturnType(typeof(string))]
@@ -72,9 +35,9 @@ namespace ScaleHQ.WPF.LHQ
         private static bool? _inDesignMode;
         private static Type _contextFactoryType;
         private static LocalizationContextFactoryBase _contextFactoryProvider;
-        private static readonly Type _typeLocalizationContextFactory = typeof(LocalizationContextFactoryBase);
-        private static readonly Type _typeINotifyPropertyChanged = typeof(INotifyPropertyChanged);
-        private static readonly Type _typeCultureInfo = typeof(CultureInfo);
+        private static readonly Type TypeLocalizationContextFactory = typeof(LocalizationContextFactoryBase);
+        private static readonly Type TypeINotifyPropertyChanged = typeof(INotifyPropertyChanged);
+        private static readonly Type TypeCultureInfo = typeof(CultureInfo);
 
         /// <summary>
         /// Creates new instance.
@@ -93,30 +56,11 @@ namespace ScaleHQ.WPF.LHQ
             Source = source;
         }
 
-        /*public static readonly DependencyProperty KeyExtProperty = DependencyProperty.RegisterAttached("KeyExt", typeof(string),
-            typeof(LocalizationExtension),
-            new FrameworkPropertyMetadata(string.Empty,
-                FrameworkPropertyMetadataOptions.BindsTwoWayByDefault | FrameworkPropertyMetadataOptions.Inherits));
-
-        public static string GetKeyExt(DependencyObject obj)
-        {
-            return obj.GetValue(KeyExtProperty) as string;
-        }
-
-        public static void SetKeyExt(DependencyObject obj, string value)
-        {
-            obj.SetValue(KeyExtProperty, value);
-        }*/
-
-        //public BindingBase KeyExt { get; set; }
-
         /// <summary>
         /// Resource key.
         /// </summary>
         [ConstructorArgument("key")]
         public string Key { get; set; }
-
-        //public BindingBase KeyExt { get; set; }
 
         /// <summary>
         /// Gets or sets the source to <c>StringsContext.Instance</c> property
@@ -136,10 +80,10 @@ namespace ScaleHQ.WPF.LHQ
                 throw new ArgumentNullException(nameof(contextFactoryType));
             }
 
-            if (!_typeLocalizationContextFactory.IsAssignableFrom(contextFactoryType))
+            if (!TypeLocalizationContextFactory.IsAssignableFrom(contextFactoryType))
             {
                 throw new InvalidOperationException(
-                    $"Type '{contextFactoryType.FullName}' must implement abstract class '{_typeLocalizationContextFactory.FullName}' !");
+                    $"Type '{contextFactoryType.FullName}' must implement abstract class '{TypeLocalizationContextFactory.FullName}' !");
             }
 
             _contextFactoryType = contextFactoryType;
@@ -274,18 +218,18 @@ namespace ScaleHQ.WPF.LHQ
                     {
                         Type localizationContextType = context.GetType();
                         PropertyInfo propertyCulture = localizationContextType.GetProperties().SingleOrDefault(x => x.Name == PropertyNameCulture);
-                        if (propertyCulture == null || propertyCulture.PropertyType != _typeCultureInfo)
+                        if (propertyCulture == null || propertyCulture.PropertyType != TypeCultureInfo)
                         {
                             throw new InvalidOperationException(
                                 $"Invalid localization context type '{localizationContextType.FullName}' ! " +
-                                $"Missing property name '{PropertyNameCulture}' of type '{_typeCultureInfo.FullName}' !");
+                                $"Missing property name '{PropertyNameCulture}' of type '{TypeCultureInfo.FullName}' !");
                         }
 
-                        if (!_typeINotifyPropertyChanged.IsAssignableFrom(localizationContextType))
+                        if (!TypeINotifyPropertyChanged.IsAssignableFrom(localizationContextType))
                         {
                             throw new InvalidOperationException(
                                 $"Invalid localization context type '{localizationContextType.FullName}' ! " +
-                                $"Type must implement interface '{_typeINotifyPropertyChanged.FullName}' !");
+                                $"Type must implement interface '{TypeINotifyPropertyChanged.FullName}' !");
                         }
 
                         _localizationContext = context;
@@ -346,7 +290,7 @@ namespace ScaleHQ.WPF.LHQ
                         localizationContextFactory = Activator.CreateInstance(factoryType) as LocalizationContextFactoryBase;
 
                         _contextFactoryProvider = localizationContextFactory ?? throw new InvalidOperationException(
-                            $"Type '{factoryType.FullName}' does not implement abstract class '{_typeLocalizationContextFactory.FullName}' !");
+                            $"Type '{factoryType.FullName}' does not implement abstract class '{TypeLocalizationContextFactory.FullName}' !");
                     }
                     catch (Exception e)
                     {
@@ -368,35 +312,17 @@ namespace ScaleHQ.WPF.LHQ
         /// <inheritdoc />
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
-            if (serviceProvider.GetService(typeof(IProvideValueTarget)) is IProvideValueTarget target)
-            {
-                // if (KeyExt != null && target.TargetObject is DependencyObject targetObject && target.TargetProperty is DependencyProperty targetProperty)
-                // {
-                //     object provideValue = KeyExt.ProvideValue(serviceProvider);
-                //
-                //     /*BindingOperations.SetBinding(targetObject, KeyExtProperty, KeyExt);
-                //     object keyextValue = targetObject.GetValue(KeyExtProperty);*/
-                // }
-
-
-                /*if (target.TargetObject is DependencyObject targetObject &&
-                    target.TargetProperty is DependencyProperty targetProperty)
-                {
-                    var keyExt = GetKeyExt(targetObject);
-
-                    //string key = LocalizationKeyAttached.GetResourceKey(targetObject);
-                }*/
-            }
-
             IFormattable localizationContext = GetLocalizationContext(serviceProvider, out var _);
             if (localizationContext == null)
             {
                 return $"@@{Key}@@";
             }
 
-            Binding binding = new Binding(PropertyNameCulture);
-            binding.Source = localizationContext;
-            binding.Mode = BindingMode.TwoWay;
+            var binding = new Binding(PropertyNameCulture)
+            {
+                Source = localizationContext, 
+                Mode = BindingMode.TwoWay
+            };
 
             if (_bindings == null || _bindings.Count == 0)
             {
@@ -405,9 +331,12 @@ namespace ScaleHQ.WPF.LHQ
                 return value;
             }
 
-            var multiBinding = new MultiBinding();
-            multiBinding.Mode = BindingMode.TwoWay;
-            multiBinding.Converter = new LocalizationConverter(localizationContext, Key, _bindings);
+            var multiBinding = new MultiBinding
+            {
+                Mode = BindingMode.TwoWay,
+                Converter = new LocalizationConverter(localizationContext, Key, _bindings)
+            };
+            
             multiBinding.Bindings.Add(binding);
 
             foreach (var item in _bindings)

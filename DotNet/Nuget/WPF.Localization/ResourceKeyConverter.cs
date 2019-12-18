@@ -1,5 +1,10 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿// /* Copyright (C) 2020 ScaleHQ Solutions s.r.o. - All Rights Reserved
+//  * Unauthorized copying of this file, via any medium is strictly prohibited
+//  * Proprietary and confidential
+//  * Written by Peter Šulek <peter.sulek@scalehq.sk> / ScaleHQ Solutions company (12/2019)
+//  */
+
+using System;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
@@ -7,14 +12,14 @@ using System.Windows.Data;
 namespace ScaleHQ.WPF.LHQ
 {
     /// <summary>
-    /// TODO: missing comment
+    /// Resource key converter.
     /// </summary>
-    public class ResourceKeyConverter : Freezable, IValueConverter//, IMultiValueConverter
+    public class ResourceKeyConverter : Freezable, IValueConverter
     {
         private LocalizationConverter _localizationConverter;
 
         /// <summary>
-        /// TODO: missing comment
+        /// Localization source dependency property.
         /// </summary>
         public static readonly DependencyProperty LocalizationSourceProperty =
             DependencyProperty.Register(
@@ -24,20 +29,21 @@ namespace ScaleHQ.WPF.LHQ
                 new UIPropertyMetadata(null));
 
         /// <summary>
-        /// TODO: missing comment
+        /// Gets or sets LHQ strings context singleton.
         /// </summary>
         public IFormattable LocalizationSource
         {
-            get { return GetValue(LocalizationSourceProperty) as IFormattable; }
-            set { SetValue(LocalizationSourceProperty, value); }
+            get => GetValue(LocalizationSourceProperty) as IFormattable;
+            set => SetValue(LocalizationSourceProperty, value);
         }
 
+        /// <inheritdoc />
         protected override Freezable CreateInstanceCore()
         {
             return new ResourceKeyConverter();
         }
 
-        private void Initialize(string resourceKey, Collection<BindingBase> bindings = null)
+        private void Initialize(string resourceKey)
         {
             if (_localizationConverter == null)
             {
@@ -59,10 +65,5 @@ namespace ScaleHQ.WPF.LHQ
         {
             return Binding.DoNothing;
         }
-
-        /*object IMultiValueConverter.Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
-        {
-            Initialize(value as string);
-        }*/
     }
 }

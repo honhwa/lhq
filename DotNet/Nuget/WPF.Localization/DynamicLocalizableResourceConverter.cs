@@ -1,8 +1,15 @@
-﻿using System;
+﻿// /* Copyright (C) 2020 ScaleHQ Solutions s.r.o. - All Rights Reserved
+//  * Unauthorized copying of this file, via any medium is strictly prohibited
+//  * Proprietary and confidential
+//  * Written by Peter Šulek <peter.sulek@scalehq.sk> / ScaleHQ Solutions company (12/2019)
+//  */
+
+using System;
 using System.ComponentModel;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
+// ReSharper disable UnusedMember.Global
 
 namespace ScaleHQ.WPF.LHQ
 {
@@ -11,8 +18,9 @@ namespace ScaleHQ.WPF.LHQ
     /// </summary>
     public class DynamicLocalizableResourceConverter : IValueConverter
     {
-        private static readonly Type _supportedType = typeof(DynamicLocalizableResource);
+        private static readonly Type SupportedType = typeof(DynamicLocalizableResource);
 
+        /// <inheritdoc />
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value == null)
@@ -21,14 +29,14 @@ namespace ScaleHQ.WPF.LHQ
             }
 
             Type valueType = value.GetType();
-            if (!_supportedType.IsAssignableFrom(valueType))
+            if (!SupportedType.IsAssignableFrom(valueType))
             {
                 var inDesignMode = DesignerProperties.GetIsInDesignMode(new DependencyObject());
 
                 if (!inDesignMode)
                 {
                     throw new InvalidOperationException(
-                        $"Converter '{GetType().Name}' can only be applied to object derived from '{_supportedType.FullName}' where " +
+                        $"Converter '{GetType().Name}' can only be applied to object derived from '{SupportedType.FullName}' where " +
                         $"'{valueType.FullName}' is not!");
                 }
 
@@ -39,6 +47,7 @@ namespace ScaleHQ.WPF.LHQ
             return resource.GetLocalizedString(parameter as string);
         }
 
+        /// <inheritdoc />
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             return Binding.DoNothing;

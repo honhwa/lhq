@@ -1,4 +1,10 @@
-﻿using System;
+﻿// /* Copyright (C) 2020 ScaleHQ Solutions s.r.o. - All Rights Reserved
+//  * Unauthorized copying of this file, via any medium is strictly prohibited
+//  * Proprietary and confidential
+//  * Written by Peter Šulek <peter.sulek@scalehq.sk> / ScaleHQ Solutions company (12/2019)
+//  */
+
+using System;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
@@ -8,9 +14,18 @@ using Microsoft.Extensions.Localization;
 
 namespace ScaleHQ.AspNetCore.LHQ
 {
+    /// <summary>
+    /// Extension methods for ASP.NET Core DI container which register LHQ related types.
+    /// </summary>
     [SuppressMessage("ReSharper", "UnusedMember.Global")]
     public static class DependencyInjectionExtensions
     {
+        /// <summary>
+        /// Register LHQ type string localizer into ASP.NET Core.
+        /// </summary>
+        /// <typeparam name="TStringLocalizer">Type of string localizer.</typeparam>
+        /// <typeparam name="TTypedStrings">Type of typed strings class.</typeparam>
+        /// <param name="services">Services container where to register LHQ strings localizer.</param>
         public static void AddTypedStringsLocalizer<TStringLocalizer, TTypedStrings>(this IServiceCollection services)
             where TStringLocalizer : class, IStringLocalizer
             where TTypedStrings : class
@@ -24,6 +39,10 @@ namespace ScaleHQ.AspNetCore.LHQ
             services.TryAddSingleton<TTypedStrings>();
         }
 
+        /// <summary>
+        /// Register LHQ types into ASP.NET Core model metadata and data annotations (NET Core &gt;= 2.x).
+        /// </summary>
+        /// <param name="mvcBuilder">Services container where to register LHQ strings localizer.</param>
         public static IMvcBuilder AddMvcTypedStringsLocalizer(this IMvcBuilder mvcBuilder)
         {
 #if !ASP_NET_CORE1
@@ -37,6 +56,13 @@ namespace ScaleHQ.AspNetCore.LHQ
             return mvcBuilder;
         }
 
+        /// <summary>
+        /// Using LHQ types in ASP.NET Core app.
+        /// </summary>
+        /// <typeparam name="TStringLocalizer">Type of string localizer.</typeparam>
+        /// <typeparam name="TTypedStrings">Type of typed strings class.</typeparam>
+        /// <param name="app">Application where to use LHQ types.</param>
+        /// <returns></returns>
         public static IApplicationBuilder UseTypedStringsLocalizer<TStringLocalizer, TTypedStrings>(this IApplicationBuilder app)
             where TStringLocalizer : class, IStringLocalizer
             where TTypedStrings : class
