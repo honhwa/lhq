@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>ScaleHQ.WPF.LHQ</id>
-    <version>1.0.0-rc4</version>
+    <version>1.0.0</version>
     <title>ScaleHQ LHQ Editor Support Library for WPF projects</title>
     <authors>ScaleHQ Solutions</authors>
     <owners>ScaleHQ Solutions</owners>
