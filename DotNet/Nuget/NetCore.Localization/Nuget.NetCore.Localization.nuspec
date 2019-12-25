@@ -11,7 +11,7 @@
     <description>$description$</description>
     <iconUrl>https://www.lhqeditor.com/images/nugeticon.png</iconUrl>
     <releaseNotes>First release of LHQ Editor Library.</releaseNotes>
-    <copyright>Copyright (c) 2017-2019 ScaleHQ Solutions</copyright>
+    <copyright>Copyright (c) 2020 ScaleHQ Solutions</copyright>
     <tags>lhq,localization,strings,editor,resx,netcore</tags>
     <dependencies>
       <group targetFramework=".NETFramework4.6.2">

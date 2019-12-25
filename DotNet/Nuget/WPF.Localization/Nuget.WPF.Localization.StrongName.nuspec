@@ -12,7 +12,7 @@
     <iconUrl>https://www.lhqeditor.com/images/nugeticon.png</iconUrl>
     <description>Localization library consuming LHQ localization files (*.lhq) to be used in WPF application as markup extension in xaml.</description>
     <releaseNotes>First release of LHQ Editor Library.</releaseNotes>
-    <copyright>Copyright (c) 2017-2019 ScaleHQ Solutions</copyright>
+    <copyright>Copyright (c) 2020 ScaleHQ Solutions</copyright>
     <tags>lhq,localization,strings,editor,resx,wpf</tags>
     <dependencies>
       <group targetFramework=".NETFramework4.6" />

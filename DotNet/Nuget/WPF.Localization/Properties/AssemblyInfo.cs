@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("ScaleHQ LHQ Editor Support Library for WPF")]
 [assembly: AssemblyProduct("ScaleHQ.WPF.LHQ")]
 [assembly: AssemblyCompany("ScaleHQ Solutions")]
-[assembly: AssemblyCopyright("Copyright (c) 2019 ScaleHQ Solutions, s.r.o.")]
+[assembly: AssemblyCopyright("Copyright (c) 2020 ScaleHQ Solutions, s.r.o.")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
