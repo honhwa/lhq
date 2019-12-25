@@ -2,5 +2,5 @@
 	<s:String x:Key="/Default/CodeStyle/FileHeader/FileHeaderText/@EntryValue">/* Copyright (C) 2020 ScaleHQ Solutions s.r.o. - All Rights Reserved&#xD;
  * Unauthorized copying of this file, via any medium is strictly prohibited&#xD;
  * Proprietary and confidential&#xD;
- * Written by Peter Šulek &lt;peter.sulek@scalehq.sk&gt; / ScaleHQ Solutions company ($CURRENT_MONTH$/$CURRENT_YEAR$)&#xD;
+ * Written by Peter Šulek &lt;peter.sulek@scalehq.sk&gt; / ScaleHQ Solutions company&#xD;
  */</s:String></wpf:ResourceDictionary>

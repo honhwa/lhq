@@ -1,9 +1,8 @@
 ﻿// /* Copyright (C) 2020 ScaleHQ Solutions s.r.o. - All Rights Reserved
 //  * Unauthorized copying of this file, via any medium is strictly prohibited
 //  * Proprietary and confidential
-//  * Written by Peter Šulek <peter.sulek@scalehq.sk> / ScaleHQ Solutions company (12/2019)
+//  * Written by Peter Šulek <peter.sulek@scalehq.sk> / ScaleHQ Solutions company
 //  */
-
 #if !ASP_NET_CORE1
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
