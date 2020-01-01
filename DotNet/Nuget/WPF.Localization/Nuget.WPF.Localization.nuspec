@@ -7,9 +7,8 @@
     <authors>ScaleHQ Solutions</authors>
     <owners>ScaleHQ Solutions</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <licenseUrl>https://www.lhqeditor.com/buy</licenseUrl>
+    <license type="expression">MIT</license>
     <projectUrl>https://www.lhqeditor.com/</projectUrl>
-    <iconUrl>https://www.lhqeditor.com/images/nugeticon.png</iconUrl>
     <description>Localization library consuming LHQ localization files (*.lhq) to be used in WPF application as markup extension in xaml.</description>
     <releaseNotes>First release of LHQ Editor Library.</releaseNotes>
     <copyright>Copyright (c) 2020 ScaleHQ Solutions</copyright>

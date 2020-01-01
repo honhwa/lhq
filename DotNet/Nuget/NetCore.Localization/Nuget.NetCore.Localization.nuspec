@@ -2,14 +2,14 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>$id$</id>
+    <title>ScaleHQ LHQ Editor Support Library for ASP.NET Core projects</title>
     <version>$version$</version>
     <authors>$authors$</authors>
     <owners>ScaleHQ Solutions</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <licenseUrl>https://www.lhqeditor.com/buy</licenseUrl>
+    <license type="expression">MIT</license>
     <projectUrl>https://www.lhqeditor.com</projectUrl>
     <description>$description$</description>
-    <iconUrl>https://www.lhqeditor.com/images/nugeticon.png</iconUrl>
     <releaseNotes>First release of LHQ Editor Library.</releaseNotes>
     <copyright>Copyright (c) 2020 ScaleHQ Solutions</copyright>
     <tags>lhq,localization,strings,editor,resx,netcore</tags>
