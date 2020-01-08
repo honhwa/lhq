@@ -213,6 +213,23 @@ namespace ScaleHQ.WPF.LHQ
                         }
                     }
 
+                    // try to find context factory on entry assembly level
+                    if (context == null)
+                    {
+                        try
+                        {
+                            var contextFactoryBase = FindContextFactoryFromAssembly(Assembly.GetEntryAssembly());
+                            if (contextFactoryBase != null)
+                            {
+                                context = contextFactoryBase.GetSingleton();
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine(e);
+                        }
+                    }
+
                     if (context != null)
                     {
                         Type localizationContextType = context.GetType();
@@ -244,6 +261,56 @@ namespace ScaleHQ.WPF.LHQ
             return _localizationContext;
         }
 
+        private LocalizationContextFactoryBase FindContextFactoryFromAssembly(Assembly assembly)
+        {
+            LocalizationContextFactoryBase result = null;
+
+            var attributes = assembly.GetCustomAttributes<LocalizationContextFactoryAttribute>().ToList();
+            if (attributes.Count > 0)
+            {
+                if (attributes.Count > 1)
+                {
+                    throw new InvalidOperationException(
+                        $"Assembly '{assembly.FullName}' contains multiple [{nameof(LocalizationContextFactoryAttribute)}(...)] definitions. " +
+                        "Only one attribute can be specified for assembly!");
+                }
+
+                var contextFactoryAttribute = attributes.First();
+
+                if (!string.IsNullOrEmpty(contextFactoryAttribute.TypeName))
+                {
+                    var factoryType = Type.GetType(contextFactoryAttribute.TypeName, false);
+
+                    if (factoryType == null)
+                    {
+                        throw new InvalidOperationException(
+                            $"Could not found type '{contextFactoryAttribute.TypeName}' specified in '{typeof(LocalizationContextFactoryAttribute).FullName}' " +
+                            $"in assembly '{assembly.FullName}'!");
+                    }
+
+
+                    try
+                    {
+                        var localizationContextFactory =
+                            Activator.CreateInstance(factoryType) as LocalizationContextFactoryBase;
+
+                        _contextFactoryProvider = localizationContextFactory ?? throw new InvalidOperationException(
+                                                      $"Type '{factoryType.FullName}' does not implement abstract class '{TypeLocalizationContextFactory.FullName}' !");
+
+                        result = localizationContextFactory;
+                    }
+                    catch (Exception e)
+                    {
+                        throw new InvalidOperationException(
+                            $"Error creating instance of type '{factoryType.FullName}' !",
+                            e);
+                    }
+                }
+            }
+
+            return result;
+        }
+
         private IFormattable FindContextFromAssemblyFactory(object targetObject)
         {
             IFormattable result = null;
@@ -256,33 +323,10 @@ namespace ScaleHQ.WPF.LHQ
 
                 if (factoryType == null && targetObject != null)
                 {
-                    Assembly assembly = targetObject.GetType().Assembly;
-                    var attributes = assembly.GetCustomAttributes<LocalizationContextFactoryAttribute>().ToList();
-                    if (attributes.Count > 0)
-                    {
-                        if (attributes.Count > 1)
-                        {
-                            throw new InvalidOperationException($"Assembly '{assembly.FullName}' contains multiple [{nameof(LocalizationContextFactoryAttribute)}(...)] definitions. "+
-                                "Only one attribute can be specified for assembly!");
-                        }
-
-                        var contextFactoryAttribute = attributes.First();
-
-                        if (!string.IsNullOrEmpty(contextFactoryAttribute.TypeName))
-                        {
-                            factoryType = Type.GetType(contextFactoryAttribute.TypeName, false);
-
-                            if (factoryType == null)
-                            {
-                                throw new InvalidOperationException(
-                                    $"Could not found type '{contextFactoryAttribute.TypeName}' specified in '{typeof(LocalizationContextFactoryAttribute).FullName}' " +
-                                    $"in assembly '{assembly.FullName}'!");
-                            }
-                        }
-                    }
+                    localizationContextFactory = FindContextFactoryFromAssembly(targetObject.GetType().Assembly);
                 }
 
-                if (factoryType != null)
+                if (factoryType != null && localizationContextFactory == null)
                 {
                     try
                     {
