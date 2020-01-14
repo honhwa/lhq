@@ -315,3 +315,9 @@ __pycache__/
 
 # OpenCover UI analysis results
 OpenCover/
+/Samples/AspNetTypescript01/AspNetTypescript01/webpack.config.js
+/Samples/AspNetTypescript01/AspNetTypescript01/Typescript/Test.ts
+/Samples/AspNetTypescript01/AspNetTypescript01/Typescript/Test.js.map
+/Samples/AspNetTypescript01/AspNetTypescript01/Typescript/Test.js
+/Samples/AspNetTypescript01/AspNetTypescript01/Typescript/App.js.map
+/Samples/AspNetTypescript01/AspNetTypescript01/Typescript/App.js
