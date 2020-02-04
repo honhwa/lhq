@@ -15,7 +15,13 @@ For example how to use this library, you can:
 
 2) Manual update in your ASP.NET Core application files:
 
-	File Startup.cs, method ConfigureServices(IServiceCollection services):
+	File 'Startup.cs'
+	-----------------
+	In using section, add:
+	- using ScaleHQ.AspNetCore.LHQ;
+
+
+	In method ConfigureServices(IServiceCollection services):
 	- as first line of this method add this line:
 	  services.AddTypedStringsLocalizer<StringsModelLocalizer, StringsModel>();
 
@@ -27,7 +33,8 @@ For example how to use this library, you can:
 			.AddMvcTypedStringsLocalizer()
 			.SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-	File Startup.cs, method Configure(IApplicationBuilder app, IHostingEnvironment env):
+
+	In method Configure(IApplicationBuilder app, IHostingEnvironment env):
 	- after app.UseMvc(...) call, add this line:
 	  app.UseTypedStringsLocalizer<StringsModelLocalizer, StringsModel>();
 
