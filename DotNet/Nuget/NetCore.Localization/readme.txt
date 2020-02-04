@@ -5,7 +5,7 @@
 This Nuget package contains support for ASP.NET Core platform.
 
 This library is required to successfully use C# classes generated from Visual Studio Extension - 'Localization HQ Editor'.
-Visual Studio Extension - 'Localization HQ Editor' is required for this library to be usefull.
+Visual Studio Extension - 'Localization HQ Editor' is required for this library to be useful.
 
 For example how to use this library, you can:
 
