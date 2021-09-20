@@ -16,7 +16,7 @@ using System.Runtime.InteropServices;
 
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2243:AttributeStringLiteralsShouldParseCorrectly", Justification = "AssemblyInformationalVersion does not need to be a parsable version")]
 
-[assembly: AssemblyVersion("1.0.2.0")]
+[assembly: AssemblyVersion("1.0.3.0")]
 
 [assembly: ComVisible(false)]
 [assembly: Guid("ae6e041b-9dfc-4386-8a1b-cd3cbf73227d")]

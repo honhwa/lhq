@@ -49,7 +49,7 @@ namespace ScaleHQ.WPF.LHQ
         /// </summary>
         /// <param name="key">resource key</param>
         /// <param name="source">The source.</param>
-        public LocalizationExtension(string key, IFormattable source)
+        public LocalizationExtension(string key, IFormattable source, string designText)
         {
             Key = key;
             Source = source;
@@ -66,6 +66,12 @@ namespace ScaleHQ.WPF.LHQ
         /// </summary>
         [ConstructorArgument("source")]
         public IFormattable Source { get; set; }
+
+        /// <summary>
+        /// Gets or sets text to be displayed in design mode when localization context is not found.
+        /// </summary>
+        [ConstructorArgument("designText")]
+        public string DesignText { get; set; }
 
         /// <summary>
         /// Initializes localization extension specified context factory type.
@@ -358,7 +364,7 @@ namespace ScaleHQ.WPF.LHQ
             IFormattable localizationContext = GetLocalizationContext(serviceProvider, out var _);
             if (localizationContext == null)
             {
-                return $"@@{Key}@@";
+                return IsInDesignMode() && !string.IsNullOrEmpty(DesignText) ? DesignText : $"@@{Key}@@";
             }
 
             var binding = new Binding(PropertyNameCulture)
